@@ -1,11 +1,10 @@
-all:
 
 
 # Definitions
 # {{{
 # PCF_FLAGS ?= --pcf-allow-unconstrained
 PCF_FLAGS ?=
-PROJECT_NAME = top
+PROJECT_NAME = wavelet_transform
 ARTIFACTS = intermediates
 SOURCES = src/*.*v
 SRC_DIR = src
@@ -57,7 +56,7 @@ $(OUT_SIM)/$(PROJECT_NAME).vcd: $(OUT_SIM)/$(PROJECT_NAME)
 
 vcd: $(OUT_SIM)/$(PROJECT_NAME).vcd
 
-show_synth: src/top.v
+show_synth: src/wavelet_transform.v
 	yosys -p "read_verilog $^; proc; opt; show -colors 2 -width -signed"
 
 show_util: $(OUT)/$(PROJECT_NAME).bin
@@ -69,8 +68,8 @@ view_trace: vcd
 buildsim: $(OUT_SIM)/$(PROJECT_NAME).vcd
 
 resources:
-	yosys -p "synth_ice40 -top $(PROJECT_NAME)" $(SOURCES) | awk '/=== top ===/,/CHECK/'
-	# yosys -p "synth_ice40 -top $(PROJECT_NAME)" $(SOURCES) > $(STATS_DIR)/$$(date +%F_%T)
+	yosys -p "synth_ice40 -wavelet_transform $(PROJECT_NAME)" $(SOURCES) | awk '/=== wavelet_transform ===/,/CHECK/'
+	# yosys -p "synth_ice40 -wavelet_transform $(PROJECT_NAME)" $(SOURCES) > $(STATS_DIR)/$$(date +%F_%T)
 
 clean:
 	rm -f $(ARTIFACTS)/*.json
