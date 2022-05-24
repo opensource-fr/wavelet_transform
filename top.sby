@@ -1,0 +1,22 @@
+[tasks]
+# cvr
+prf
+
+[options]
+# options for cover
+# cvr: mode cover
+
+# options for prove
+prf: mode prove
+prf: depth 20
+
+[engines]
+smtbmc
+
+[script]
+read -formal top.v
+prep -top top
+
+[files]
+./src/top.v
+

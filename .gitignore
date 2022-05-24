@@ -1,0 +1,9 @@
+obj_dir/
+intermediates/
+logs/
+build/
+sim_build/
+util_stats/
+top/
+top_cvr/
+top_prf/
