@@ -5,7 +5,7 @@ module wavelet_transform #(
     parameter BITS_PER_ELEM = 8
 ) (
     // Clock
-    input wire i_clk,
+    input wire clk,
 
     // Input Wire
     input wire [BITS_PER_ELEM - 1:0] i_value,
@@ -46,7 +46,7 @@ module wavelet_transform #(
       .BITS_PER_TAP(BITS_PER_ELEM),
       .TOTAL_BITS(TOTAL_BITS)
   ) srl_1 (
-      .i_clk  (i_clk),
+      .clk  (clk),
       .i_value(i_value),
       .o_LED  (o_LED2),
       .o_taps (taps[TOTAL_BITS-1:0])
@@ -62,7 +62,7 @@ module wavelet_transform #(
             .NUM_ELEM($rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, i))),
             .CENTER_FREQ(BASE_FREQ * $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, i)))
         ) fir_1 (
-            .i_clk(i_clk),
+            .clk(clk),
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0])
             //verilator lint_on WIDTH
@@ -73,7 +73,7 @@ module wavelet_transform #(
             .NUM_ELEM(1 + $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, i))),
             .CENTER_FREQ(BASE_FREQ * $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, i)))
         ) fir_1 (
-            .i_clk(i_clk),
+            .clk(clk),
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0])
             //verilator lint_on WIDTH

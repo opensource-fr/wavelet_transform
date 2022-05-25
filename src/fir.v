@@ -7,7 +7,7 @@ module fir #(
     parameter CENTER_FREQ = 1
 ) (
     // Clock
-    input wire i_clk,
+    input wire clk,
 
     // TAPS
     input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps
@@ -58,7 +58,7 @@ module fir #(
     sum = 0;
   end
 
-  always @(posedge i_clk) begin
+  always @(posedge clk) begin
     // verilator lint_off BLKSEQ
     // verilator lint_off WIDTH
     sum = 0;

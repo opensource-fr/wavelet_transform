@@ -7,7 +7,7 @@ module shift_register_line #(
     parameter TOTAL_BITS = 9 * 8
 ) (
     // Clock
-    input wire i_clk,
+    input wire clk,
 
     // Inputs Streaming
     input wire [BITS_PER_TAP - 1:0] i_value,
@@ -28,7 +28,7 @@ module shift_register_line #(
     counter = 0;
   end
 
-  always @(posedge i_clk) begin
+  always @(posedge clk) begin
     counter <= counter + 1;
     stb <= 1'b0;
     if (counter == {COUNTER_WIDTH{1'b0}}) begin
@@ -36,7 +36,7 @@ module shift_register_line #(
     end
   end
 
-  always @(posedge i_clk) begin
+  always @(posedge clk) begin
     o_taps <= o_taps;
     if (stb == 1'b1) begin
       // shift in BITS_PER_TAP, one element at a time
