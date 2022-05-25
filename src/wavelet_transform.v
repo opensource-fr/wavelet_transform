@@ -2,13 +2,18 @@
 `define ELEM_RATIO (0.577472)
 
 module wavelet_transform #(
-    parameter BITS_PER_ELEM = 8
+    parameter BITS_PER_ELEM = 8,
+    parameter TOTAL_FILTERS = 8
 ) (
     // Clock
     input wire clk,
 
     // Input Wire
     input wire [BITS_PER_ELEM - 1:0] i_value,
+
+    // Output Bits
+    /* output wire o_LED2, */
+    /* reg [$clog2({BITS_PER_ELEM{1'b1}}*8):0] sum; */
 
     // Output leds
     output wire o_LED2
@@ -23,7 +28,7 @@ module wavelet_transform #(
   // highest frequency sets the sample rate
   parameter BASE_FREQ = 1;
   parameter BASE_NUM_ELEM = 3;
-  parameter NUM_FILTERS = 8;
+  parameter NUM_FILTERS = TOTAL_FILTERS;
   /* parameter BITS_PER_ELEM = 8; */
   // number of elements is ∝ HIGHEST_FREQ/THIS_FREQ
   // really we should calculate the ratio of the elements to produce the freq

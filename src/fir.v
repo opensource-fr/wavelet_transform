@@ -10,13 +10,17 @@ module fir #(
     input wire clk,
 
     // TAPS
-    input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps
+    input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps,
+
+    // Outputs
+    output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum
 
 );
-//TODO: -1: -8 out of range
 
   reg [NUM_ELEM * BITS_PER_ELEM - 1:0] filter;
   reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum;
+
+  assign output_sum = sum;
 
   // verilator lint_off UNUSED
   function [7:0] trunc_32_to_8(input [31:0] int_32);
