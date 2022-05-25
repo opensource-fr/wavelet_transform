@@ -33,6 +33,13 @@ module fir #(
     // This section calculates wavelet coefficients for the filter bank
     // Ricker Equation: r(τ)=(1−1/2 * ω^2 * τ^2)exp(−1/4* ω^2 * τ^2),
     // verilator lint_off WIDTH
+    //
+    //if odd, set the center value to be one times scaling factor, then
+    //truncated to 8 bits
+    if (NUM_ELEM % 2 == 1) begin
+      filter[NUM_ELEM/2] = trunc_32_to_8({BITS_PER_ELEM{1'b1}} / 2);
+    end
+
     for (j = 1; j < (NUM_ELEM / 2 + 1); j = j + 1) begin
       filter[BITS_PER_ELEM*((NUM_ELEM/2)+j)+:BITS_PER_ELEM] = trunc_32_to_8(
           $rtoi(
