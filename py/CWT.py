@@ -138,11 +138,11 @@ class Wavelet_Array:
         for wavelet_order in range(0, self._max_wavelet_order):
             self._filter_list.append(
                 CWT_FIR(
-                    bits_per_elem = self._bits_per_elem,
-                    elem_ratio = self._elem_ratio,
-                    base_freq = self._base_freq,
-                    base_num_elem = self._base_num_elem,
-                    wavelet_order = wavelet_order,
+                    bits_per_elem=self._bits_per_elem,
+                    elem_ratio=self._elem_ratio,
+                    base_freq=self._base_freq,
+                    base_num_elem=self._base_num_elem,
+                    wavelet_order=wavelet_order,
                 )
             )
 
@@ -173,7 +173,7 @@ class Wavelet_Array:
 # cwt = CWT_FIR(base_num_elem=12)
 
 # cwt.print_tap_values()
-wa = Wavelet_Array(base_num_elem = 3)
+wa = Wavelet_Array(base_num_elem=3)
 print("print all filters")
 wa.print_all_filters()
 
