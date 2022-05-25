@@ -1,5 +1,5 @@
 # 12 MHz clock
-set_io -nowarn i_clk        35
+set_io -nowarn clk        35
 
 # RS232
 set_io -nowarn RX          6
