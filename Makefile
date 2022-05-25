@@ -14,6 +14,12 @@ ICEBREAKER_PCF = pinconfig/icebreaker.pcf
 LOGS=logs
 OUT=build
 OUT_SIM=sim_build
+
+# COCOTB variables
+export COCOTB_REDUCED_LOG_FMT=1
+export PYTHONPATH := test:$(PYTHONPATH)
+export LIBPYTHON_LOC=$(shell cocotb-config --libpython)
+
 ICEBREAKER_PKG = sg48
 SEED = 1
 VERILATOR_ROOT ?= $(shell bash -c 'verilator -V|grep VERILATOR_ROOT | head -1 | sed -e "s/^.*=\s*//"')
@@ -74,8 +80,6 @@ resources:
 
 # TODO: remove everything except for .gitignore
 test_cwt:
-	rm -rf sim_build/*
-	mkdir sim_build/
 	iverilog -o sim_build/sim.vvp -s wavelet_transform -s dump -g2012 src/wavelet_transform.v test/dump_cwt.v src/ src/fir.v src/shift_register_line.v
 	PYTHONOPTIMIZE=${NOASSERT} MODULE=test.test_cwt vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
 	! grep failure results.xml
