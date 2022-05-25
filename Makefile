@@ -71,6 +71,17 @@ resources:
 	yosys -p "synth_ice40 -wavelet_transform $(PROJECT_NAME)" $(SOURCES) | awk '/=== wavelet_transform ===/,/CHECK/'
 	# yosys -p "synth_ice40 -wavelet_transform $(PROJECT_NAME)" $(SOURCES) > $(STATS_DIR)/$$(date +%F_%T)
 
+
+# TODO: remove everything except for .gitignore
+test_cwt:
+	rm -rf sim_build/*
+	mkdir sim_build/
+	iverilog -o sim_build/sim.vvp -s wavelet_transform -s dump -g2012 src/wavelet_transform.v test/dump_cwt.v src/ src/fir.v src/shift_register_line.v
+	PYTHONOPTIMIZE=${NOASSERT} MODULE=test.test_cwt vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
+	! grep failure results.xml
+
+
+# TODO: remove everything except for .gitignore
 clean:
 	rm -f $(ARTIFACTS)/*.json
 	rm -f $(ARTIFACTS)/*.asc
