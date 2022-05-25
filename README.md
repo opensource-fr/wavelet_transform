@@ -1,83 +1,40 @@
-# Template Usage
+# Wavelet Transform
 
-This is a template folder structure, using it currently
-for centralizing development and easy update of makefiles etc.
+[toc]
 
-Can merge in major changes to main branch, and selectively
-merge into project brances to update their structure.
+# Description
 
-# TODOS
+The wavelet transform can be seen as an alternative to the FFT.
 
-+ TODO: want max clock, resources, and dev util, luts
+Essentially it's a convolution of a small wave or 'wavelet'.
 
-## Usage
+A wavelet is created from which is integral of close together cosine waves, and
+ends up looking like mini-version of the center freq.
 
-### 1. modify pinconfig
++ TODO: add image
 
-`./pinconfig/icebreaker.pcf`
+Typically, the shape of the wavelet is the same for each of ranges of interest,
+just scaled.
 
-rename the pins as necessary for verilog modules
-
-
-### 2. modify verilog modules
-
-`./src/`
-
-edit verilog source files in the src folder.
-
-top module should be named top.
-
-### 3. modify simulation files
-
-Look into the Vtop.h file for names of wires and signals
-
-Internal registers are accessed like `tb->top__DOT__counter`
-
-*Note that top.cpp will need to be edited manually for changes in top.v and other source files.*
+## More Wavelet Details
 
 
-### 4. run `make` to build binaries
+### Wavelets Retain Phase Data
 
-These will create files that can be used for programming the FPGA.
+With wavelet's one sees not just the intensity of frequency, but whether high or low at that point in time.
 
-### 6. run `make prog` to flash the fpga
+This is very interesting to monitoring and extrapolating patterns in the data.
 
-### 5. run `make buildsim` to build and run simulation and trace
+### Wavelets Increase Temporal Resolution vs FFT
 
-simulation files will be added to the `sim_build` directory.
+Unlike the fft (which uses same time scale for multiple frequencies), each
+frequency range has very high temporal localization.
 
+This also means different resolution between different frequencies, higher frequencies
+will have higher temporal resolution.
 
-### 7. run `gtkwave ./sim_build/top.vcd'` to view trace
+Will be better or at par with temporal resolution than the fourier frequency transform.
 
-## Directory Structure
+### Implementation
 
-```
-.
-├── build
-├── intermediates
-├── logs
-├── Makefile
-├── obj_dir
-├── pinconfig
-│   └── icebreaker.pcf
-├── py
-│   └── pytest.py
-├── README.md
-├── sim
-│   └── top.cpp
-├── sim_build
-└── src
-    ├── edge_detect.v
-    ├── seven_segment_counter.v
-    └── top.v
-```
-
-- `build` - output files, binaries (non-sim-related)
-- `intermediates` - non-logfile intermediates
-- `logs` - log files
-- `obj_dir` - verilator generated files
-- `pinconfig` - holds fpga target pin configuration and naming
-- `py` - python test files for checking math, etc.
-- `sim` - verilator cpp files
-- `sim_build` - location of output from verilator and trace
-- `src` - location of verilog files
+Under the hood, effectively, each wavelet is a FIR notch pass filter.
