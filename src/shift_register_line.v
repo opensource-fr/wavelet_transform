@@ -38,11 +38,11 @@ module shift_register_line #(
 
   always @(posedge clk) begin
     o_taps <= o_taps;
-    /* if (stb == 1'b1) begin */
+    if (stb == 1'b1) begin
       // shift in BITS_PER_TAP, one element at a time
       o_taps <= {o_taps[((TOTAL_BITS-1)-BITS_PER_TAP):0], i_value};
-      /* stb <= 1'b0; */
-    /* end */
+      stb <= 1'b0;
+    end
   end
 
   /* assign o_LED = !counter[COUNTER_WIDTH-1]; */
