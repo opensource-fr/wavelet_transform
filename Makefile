@@ -80,9 +80,9 @@ resources:
 
 # TODO: remove everything except for .gitignore
 test_cwt:
-	iverilog -o sim_build/sim.vvp -s wavelet_transform -s dump -g2012 src/wavelet_transform.v test/dump_cwt.v src/ src/fir.v src/shift_register_line.v
+	rm -rf ./sim_build/*
+	iverilog -o sim_build/sim.vvp  -s wavelet_transform -g2012 src/wavelet_transform.v  src/fir.v src/shift_register_line.v
 	PYTHONOPTIMIZE=${NOASSERT} MODULE=test.test_cwt vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
-	! grep failure results.xml
 
 
 # TODO: remove everything except for .gitignore

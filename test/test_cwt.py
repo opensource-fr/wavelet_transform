@@ -1,39 +1,58 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
+import wave
+import struct
 import random
 import math
 
-async def reset(dut):
-    dut.reset.value = 1
-
-    await ClockCycles(dut.clk, 5)
-    dut.reset.value = 0;
 
 @cocotb.test()
-async def test_pwm(dut):
+async def test(dut):
     clock = Clock(dut.clk, 10, units="us")
     cocotb.fork(clock.start())
 
-    # test a range of values
-    for i in range(10, 255, 20):
-        # set pwm to this level
-        dut.i_value.value = i
+    # open audio files for read and write
+    # audio_in = wave.open("./test/middle_c.wav")
+    audio_in = wave.open("./test/hello.wav")
+    audio_out = wave.open("./test/out.wav", "wb")
+    audio_out.setnchannels(audio_in.getnchannels())
+    audio_out.setsampwidth(audio_in.getnchannels())
+    audio_out.setframerate(audio_in.getframerate())
 
-        await reset(dut)
+    nframes = audio_in.getnframes()
+    print("sending %d frames" % nframes)
 
-        # wait pwm level clock steps
-        for on in range(i):
-            await RisingEdge(dut.clk)
+    # process audio through dut
+    for i in range(nframes):
+        await RisingEdge(dut.clk)
+        frame = audio_in.readframes(1)
+        # print(frame)
+        (val,) = struct.unpack("h", frame)
 
-            # assert high
-            # assert(dut.out)
+        if val > 0:
+            dut.i_value.value = min(int((val / 32768.0 * 127)), 127)
+        elif val < 0:
+            dut.i_value.value = max(int((val / 32768.0 * 127)), -127)
+        else:
+            dut.i_value.value = 0
 
-        for off in range(255-i):
-            await RisingEdge(dut.clk)
+        # print(val, dut.i_value.value)
+        # print(dut.i_value)
+        await RisingEdge(dut.clk)
+        s = int(str(dut.o_sum[1]), 2)
 
-            # assert low
-            # assert(dut.out == 0)
+        if s > 2147483647:
+            s = s - 4294967295 - 1
 
+        input = 0
+        if int(dut.i_value) > 127:
+            input = int(str(dut.i_value), 2) - 255 - 1
+        else:
+            input = int(str(dut.i_value), 2)
 
+        print(val, input, s)
 
+        # assert(True)
+        # raw_out, = struct.pack('i', dut.o_sum[0].value.signed_integer)
+        # audio_out.writeframes(raw_out)
