@@ -13,14 +13,16 @@ module fir #(
     input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps,
 
     // Outputs
-    output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum
+    /* output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum */
+    output wire integer o_sum
 
 );
 
   reg [NUM_ELEM * BITS_PER_ELEM - 1:0] filter;
-  reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum;
+  /* reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum; */
+  reg integer sum;
 
-  assign output_sum = sum;
+  assign o_sum = sum;
 
   // verilator lint_off UNUSED
   function [7:0] trunc_32_to_8(input [31:0] int_32);
@@ -67,7 +69,8 @@ module fir #(
     // verilator lint_off WIDTH
     sum = 0;
     for (i = 0; i < NUM_ELEM; i = i + 1) begin
-      sum = sum + filter[BITS_PER_ELEM*i+:BITS_PER_ELEM] * taps[BITS_PER_ELEM*i+:BITS_PER_ELEM];
+      /* sum = sum + filter[BITS_PER_ELEM*i+:BITS_PER_ELEM] * taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]; */
+      sum = sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
     end
     // verilator lint_on BLKSEQ
     // verilator lint_on WIDTH

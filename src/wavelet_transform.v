@@ -1,29 +1,38 @@
 `default_nettype none
 `define ELEM_RATIO (0.577472)
+`timescale 1ns/1ns
 
 module wavelet_transform #(
     parameter BITS_PER_ELEM = 8,
-    parameter TOTAL_FILTERS = 8
+    parameter TOTAL_FILTERS = 3
 ) (
     // Clock
     input wire clk,
 
     // Input Wire
-    input wire [BITS_PER_ELEM - 1:0] i_value,
+    input wire signed [BITS_PER_ELEM - 1:0] i_value,
 
     // Output Bits
     /* output wire o_LED2, */
     /* reg [$clog2({BITS_PER_ELEM{1'b1}}*8):0] sum; */
 
     // Output leds
-    output wire o_LED2
+    output wire o_LED2,
+    output integer o_sum [TOTAL_FILTERS:0]
 );
 
-`ifdef VERILATOR
+/* `ifdef VERILATOR */
+/*   parameter COUNTER_WIDTH = 4; */
+/* `else */
+/*   parameter COUNTER_WIDTH = 25; */
+/* `endif */
+
   parameter COUNTER_WIDTH = 4;
-`else
-  parameter COUNTER_WIDTH = 25;
-`endif
+initial begin
+  $dumpfile ("wavelet_transform.vcd");
+  $dumpvars (0, wavelet_transform);
+end
+
 
   // highest frequency sets the sample rate
   parameter BASE_FREQ = 1;
@@ -69,8 +78,9 @@ module wavelet_transform #(
         ) fir_1 (
             .clk(clk),
             //verilator lint_off WIDTH
-            .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0])
+            .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0]),
             //verilator lint_on WIDTH
+            .o_sum(o_sum[i])
         );
       end else begin
         fir #(
@@ -80,8 +90,9 @@ module wavelet_transform #(
         ) fir_1 (
             .clk(clk),
             //verilator lint_off WIDTH
-            .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0])
+            .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0]),
             //verilator lint_on WIDTH
+            .o_sum(o_sum[i])
         );
       end
     end

@@ -10,7 +10,7 @@ module shift_register_line #(
     input wire clk,
 
     // Inputs Streaming
-    input wire [BITS_PER_TAP - 1:0] i_value,
+    input wire signed [BITS_PER_TAP - 1:0] i_value,
 
     // LED
     output wire o_LED,
@@ -38,12 +38,13 @@ module shift_register_line #(
 
   always @(posedge clk) begin
     o_taps <= o_taps;
-    if (stb == 1'b1) begin
+    /* if (stb == 1'b1) begin */
       // shift in BITS_PER_TAP, one element at a time
       o_taps <= {o_taps[((TOTAL_BITS-1)-BITS_PER_TAP):0], i_value};
-    end
+      /* stb <= 1'b0; */
+    /* end */
   end
 
-  assign o_LED = !counter[COUNTER_WIDTH-1];
+  /* assign o_LED = !counter[COUNTER_WIDTH-1]; */
 
 endmodule
