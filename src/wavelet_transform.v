@@ -12,13 +12,17 @@ module wavelet_transform #(
     // Input Wire
     input wire signed [BITS_PER_ELEM - 1:0] i_value,
 
-    // Output Bits
-    /* output wire o_LED2, */
-    /* reg [$clog2({BITS_PER_ELEM{1'b1}}*8):0] sum; */
+    // data_input clock (rising edge)
+    input wire i_data_clk,
+
+    // output bits, (for now all 32 bit signed registers)
+    output wire [31:0] o_sum [TOTAL_FILTERS:0],
+    /* output wire [31:0] o_sum [:0] */
+    /* output wire o_sum [TOTAL_FILTERS:0], */
 
     // Output leds
-    output wire o_LED2,
-    output integer o_sum [TOTAL_FILTERS:0]
+    output wire o_LED2
+
 );
 
 /* `ifdef VERILATOR */
@@ -27,11 +31,16 @@ module wavelet_transform #(
 /*   parameter COUNTER_WIDTH = 25; */
 /* `endif */
 
+  wire start_calc;
+
   parameter COUNTER_WIDTH = 4;
-initial begin
-  $dumpfile ("wavelet_transform.vcd");
-  $dumpvars (0, wavelet_transform);
-end
+
+  /* `ifdef COCOTB_SIM */
+    initial begin
+      $dumpfile ("wavelet_transform.vcd");
+      $dumpvars (0, wavelet_transform);
+    end
+  /* `endif */
 
 
   // highest frequency sets the sample rate
@@ -63,7 +72,9 @@ end
       .clk  (clk),
       .i_value(i_value),
       .o_LED  (o_LED2),
-      .o_taps (taps[TOTAL_BITS-1:0])
+      .o_taps (taps[TOTAL_BITS-1:0]),
+      .i_data_clk (i_data_clk),
+      .o_start_calc (start_calc)
   );
 
   genvar i;
@@ -80,7 +91,8 @@ end
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0]),
             //verilator lint_on WIDTH
-            .o_sum(o_sum[i])
+            .o_sum(o_sum[i]),
+            .i_start_calc(start_calc)
         );
       end else begin
         fir #(
@@ -92,7 +104,8 @@ end
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0]),
             //verilator lint_on WIDTH
-            .o_sum(o_sum[i])
+            .o_sum(o_sum[i]),
+            .i_start_calc(start_calc)
         );
       end
     end

@@ -9,6 +9,9 @@ module fir #(
     // Clock
     input wire clk,
 
+    // signal to clock in data from inputs
+    input wire i_start_calc,
+
     // TAPS
     input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps,
 
@@ -20,7 +23,8 @@ module fir #(
 
   reg [NUM_ELEM * BITS_PER_ELEM - 1:0] filter;
   /* reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum; */
-  reg integer sum;
+  reg signed [31:0] sum;
+  reg signed [31:0] working_sum;
 
   assign o_sum = sum;
 
@@ -62,16 +66,25 @@ module fir #(
     // verilator lint_on WIDTH
     end
     sum = 0;
+    working_sum = 0;
   end
 
   always @(posedge clk) begin
     // verilator lint_off BLKSEQ
     // verilator lint_off WIDTH
-    sum = 0;
-    for (i = 0; i < NUM_ELEM; i = i + 1) begin
-      /* sum = sum + filter[BITS_PER_ELEM*i+:BITS_PER_ELEM] * taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]; */
-      sum = sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
+    if (i_start_calc) begin
+      working_sum = 0;
+      for (i = 0; i < NUM_ELEM; i = i + 1) begin
+        /* sum = sum + filter[BITS_PER_ELEM*i+:BITS_PER_ELEM] * taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]; */
+        working_sum = working_sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
+      end
+      sum <= working_sum;
     end
+    else begin
+      sum <= sum;
+    end
+
+
     // verilator lint_on BLKSEQ
     // verilator lint_on WIDTH
   end
