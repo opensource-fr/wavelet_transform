@@ -16,7 +16,7 @@ module wavelet_transform #(
     input wire i_data_clk,
 
     // output bits, (for now all 32 bit signed registers)
-    output wire [31:0] o_sum [TOTAL_FILTERS:0],
+    output wire [(TOTAL_FILTERS*32 - 1):0] o_sum,
     /* output wire [31:0] o_sum [:0] */
     /* output wire o_sum [TOTAL_FILTERS:0], */
 
@@ -64,7 +64,6 @@ module wavelet_transform #(
   /* assign i_value = {BITS_PER_ELEM{1'b1}}; */
 
   shift_register_line #(
-      .COUNTER_WIDTH(COUNTER_WIDTH),
       .TOTAL_TAPS(TOTAL_TAPS),
       .BITS_PER_TAP(BITS_PER_ELEM),
       .TOTAL_BITS(TOTAL_BITS)
@@ -91,7 +90,7 @@ module wavelet_transform #(
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0]),
             //verilator lint_on WIDTH
-            .o_sum(o_sum[i]),
+            .o_wavelet(o_sum[32*i+:32]),
             .i_start_calc(start_calc)
         );
       end else begin
@@ -104,7 +103,7 @@ module wavelet_transform #(
             //verilator lint_off WIDTH
             .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0]),
             //verilator lint_on WIDTH
-            .o_sum(o_sum[i]),
+            .o_wavelet(o_sum[32*i+:32]),
             .i_start_calc(start_calc)
         );
       end

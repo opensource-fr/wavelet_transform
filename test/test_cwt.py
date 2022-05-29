@@ -52,10 +52,11 @@ async def test(dut):
 
         dut.i_data_clk.value = 0
 
-        s = int(str(dut.o_sum[1]), 2)
+        # print(int(str(dut.o_sum),2))
+        # s = int(str(dut.o_sum[0:31]), 2)
 
-        if s > 2147483647:
-            s = s - 4294967295 - 1
+        # if s > 2147483647:
+        #     s = s - 4294967295 - 1
 
         # input = 0
         # if int(dut.i_value) > 127:
@@ -65,7 +66,7 @@ async def test(dut):
 
 
 #         print(val, input, s)
-        print(val, dut.i_value, s)
+        # print(val, dut.i_value, s)
 
         await RisingEdge(dut.clk)
         await RisingEdge(dut.clk)

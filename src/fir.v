@@ -17,7 +17,7 @@ module fir #(
 
     // Outputs
     /* output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum */
-    output wire integer o_sum
+    output wire signed [31:0] o_wavelet
 
 );
 
@@ -26,7 +26,7 @@ module fir #(
   reg signed [31:0] sum;
   reg signed [31:0] working_sum;
 
-  assign o_sum = sum;
+  assign o_wavelet = sum;
 
   // verilator lint_off UNUSED
   function [7:0] trunc_32_to_8(input [31:0] int_32);

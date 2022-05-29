@@ -2,7 +2,7 @@
 
 # Definitions
 # {{{
-# PCF_FLAGS ?= --pcf-allow-unconstrained
+PCF_FLAGS ?= --pcf-allow-unconstrained
 PCF_FLAGS ?=
 PROJECT_NAME = wavelet_transform
 ARTIFACTS = intermediates
