@@ -16,23 +16,23 @@ module fir #(
     input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps,
 
     // Outputs
+    //TODO: refactor output from int32 to only allocate number of bits that will be used
     /* output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum */
     output wire signed [31:0] o_wavelet
 
 );
 
   reg [NUM_ELEM * BITS_PER_ELEM - 1:0] filter;
+  //TODO: refactor output from int32 to only allocate number of bits that will be used
   /* reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum; */
   reg signed [31:0] sum;
   reg signed [31:0] working_sum;
 
   assign o_wavelet = sum;
 
-  // verilator lint_off UNUSED
   function [7:0] trunc_32_to_8(input [31:0] int_32);
     trunc_32_to_8 = int_32[7:0];
   endfunction
-  // verilator lint_on UNUSED
 
   // While Verilog 2005 doesn't support inline var
   reg [$clog2(NUM_ELEM) + 1:0] j;
@@ -42,7 +42,6 @@ module fir #(
         trunc_32_to_8($rtoi({BITS_PER_ELEM{1'b1}} / 2));
     // This section calculates wavelet coefficients for the filter bank
     // Ricker Equation: r(τ)=(1−1/2 * ω^2 * τ^2)exp(−1/4* ω^2 * τ^2),
-    // verilator lint_off WIDTH
     //
     //if odd, set the center value to be one times scaling factor, then
     //truncated to 8 bits
@@ -63,19 +62,15 @@ module fir #(
           )
       );
       filter[BITS_PER_ELEM*((NUM_ELEM/2)-j)+:BITS_PER_ELEM] = filter[BITS_PER_ELEM*((NUM_ELEM/2)+j)+:BITS_PER_ELEM];
-    // verilator lint_on WIDTH
     end
     sum = 0;
     working_sum = 0;
   end
 
   always @(posedge clk) begin
-    // verilator lint_off BLKSEQ
-    // verilator lint_off WIDTH
     if (i_start_calc) begin
       working_sum = 0;
       for (i = 0; i < NUM_ELEM; i = i + 1) begin
-        /* sum = sum + filter[BITS_PER_ELEM*i+:BITS_PER_ELEM] * taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]; */
         working_sum = working_sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
       end
       sum <= working_sum;
@@ -83,10 +78,6 @@ module fir #(
     else begin
       sum <= sum;
     end
-
-
-    // verilator lint_on BLKSEQ
-    // verilator lint_on WIDTH
   end
 
 endmodule
