@@ -4,7 +4,8 @@
 
 module wavelet_transform #(
     parameter BITS_PER_ELEM = 8,
-    parameter TOTAL_FILTERS = 3
+    parameter TOTAL_FILTERS = 4,
+    parameter SUM_TRUNCATION = 8
 ) (
     // Clock
     input wire clk,
@@ -16,7 +17,7 @@ module wavelet_transform #(
     input wire i_data_clk,
 
     // output bits, (for now all 32 bit signed registers)
-    output wire [(TOTAL_FILTERS*32 - 1):0] o_sum,
+    output wire [(TOTAL_FILTERS*SUM_TRUNCATION - 1):0] o_truncated_wavelet_out
 
 );
 
@@ -24,13 +25,12 @@ module wavelet_transform #(
 
   parameter COUNTER_WIDTH = 4;
 
-  //TODO: find out how to set the COCOTB_SIM on cocotb simulation
-  /* `ifdef COCOTB_SIM */
+  `ifdef COCOTB_SIM
     initial begin
       $dumpfile ("wavelet_transform.vcd");
       $dumpvars (0, wavelet_transform);
     end
-  /* `endif */
+  `endif
 
   // highest frequency sets the sample rate
   parameter BASE_FREQ = 1;
@@ -71,7 +71,7 @@ module wavelet_transform #(
         ) fir_1 (
             .clk(clk),
             .taps (taps[BITS_PER_ELEM*$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i))-1:0]),
-            .o_wavelet(o_sum[32*i+:32]),
+            .o_wavelet(o_truncated_wavelet_out[SUM_TRUNCATION*i+:SUM_TRUNCATION]),
             .i_start_calc(start_calc)
         );
       end else begin
@@ -82,7 +82,7 @@ module wavelet_transform #(
         ) fir_1 (
             .clk(clk),
             .taps (taps[BITS_PER_ELEM*(1+$rtoi(BASE_NUM_ELEM*1.0/$pow(`ELEM_RATIO, i)))-1:0]),
-            .o_wavelet(o_sum[32*i+:32]),
+            .o_wavelet(o_truncated_wavelet_out[SUM_TRUNCATION*i+:SUM_TRUNCATION]),
             .i_start_calc(start_calc)
         );
       end

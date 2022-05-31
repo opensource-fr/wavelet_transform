@@ -1,10 +1,12 @@
 `default_nettype none
 `define M_T 6.2831853071
 
+// TODO: Assume SUM_TRUNCATION of 8 for now, but make this a parameter later
 module fir #(
     parameter BITS_PER_ELEM = 8,
     parameter NUM_ELEM = 7,
-    parameter CENTER_FREQ = 1
+    parameter CENTER_FREQ = 1,
+    parameter SUM_TRUNCATION = 8
 ) (
     // Clock
     input wire clk,
@@ -18,17 +20,26 @@ module fir #(
     // Outputs
     //TODO: refactor output from int32 to only allocate number of bits that will be used
     /* output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum */
-    output wire signed [31:0] o_wavelet
+    output wire signed [SUM_TRUNCATION - 1:0] o_wavelet
 
 );
 
   reg [NUM_ELEM * BITS_PER_ELEM - 1:0] filter;
   //TODO: refactor output from int32 to only allocate number of bits that will be used
-  /* reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum; */
-  reg signed [31:0] sum;
-  reg signed [31:0] working_sum;
 
-  assign o_wavelet = sum;
+  // Find number of bits for full range
+  /* reg [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] ; */
+  /* reg signed [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] sum; */
+  // register for number of bits to right shift
+  // max possible product + max possible product ... for every element (i.e.
+  // NUM_ELEM times)
+  // TODO: calculate max bits from actual fir values instead of max, this may not be possible without using sv, or python and hardcoding it.
+  localparam MAX_BITS = $clog2({BITS_PER_ELEM{1'b1}}*{BITS_PER_ELEM{1'b1}}*NUM_ELEM);
+
+  reg signed [MAX_BITS - 1:0] sum;
+  reg signed [MAX_BITS - 1:0] working_sum;
+  /* reg signed [31:0] sum; */
+  /* reg signed [31:0] working_sum; */
 
   function [7:0] trunc_32_to_8(input [31:0] int_32);
     trunc_32_to_8 = int_32[7:0];
@@ -67,6 +78,14 @@ module fir #(
     working_sum = 0;
   end
 
+  assign o_wavelet = sum[(MAX_BITS - 1): (MAX_BITS) - SUM_TRUNCATION]; // top 8 bits, (e.g. 31: 24 (32 - 8 = 24) )
+
+  // we don't always want to have the sum be calculated for power reasons
+  // (purpose of i_start_calc is to only perform calc when signalled) as
+  // a result we keep the working_sum (register for making the sum) separate
+  // from the register linked directly to the output (in this case this is
+  // called "sum", and will maintian its value, only being updated if
+  // i_start_calc is raised)
   always @(posedge clk) begin
     if (i_start_calc) begin
       working_sum = 0;
