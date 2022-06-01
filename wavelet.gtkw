@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.111 (w)1999-2020 BSI
-[*] Tue May 31 23:41:39 2022
+[*] Wed Jun  1 00:08:31 2022
 [*]
 [dumpfile] "/home/zerotoasic/OpensourceWaveletTransform/wavelet_transform.vcd"
-[dumpfile_mtime] "Tue May 31 23:35:53 2022"
-[dumpfile_size] 35498309
+[dumpfile_mtime] "Wed Jun  1 00:03:01 2022"
+[dumpfile_size] 35954736
 [savefile] "/home/zerotoasic/OpensourceWaveletTransform/wavelet.gtkw"
-[timestart] 0
+[timestart] 1222100
 [size] 1848 1022
 [pos] 51 45
-*-26.999998 140020000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-16.199999 184460000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] wavelet_transform.
 [treeopen] wavelet_transform.genblk1[0].
 [treeopen] wavelet_transform.genblk1[0].genblk1.
@@ -20,7 +20,7 @@
 [treeopen] wavelet_transform.genblk1[3].
 [treeopen] wavelet_transform.genblk1[3].genblk1.
 [sst_width] 297
-[signals_width] 166
+[signals_width] 222
 [sst_expanded] 0
 [sst_vpaned_height] 271
 @20000
@@ -32,5 +32,15 @@ wavelet_transform.genblk1[1].genblk1.fir_1.o_wavelet[7:0]
 wavelet_transform.genblk1[2].genblk1.fir_1.o_wavelet[7:0]
 @8421
 wavelet_transform.genblk1[3].genblk1.fir_1.o_wavelet[7:0]
+@200
+-
+@28
+wavelet_transform.srl_1.data_clk_two_previous
+wavelet_transform.srl_1.data_clk_previous
+[color] 1
+wavelet_transform.srl_1.i_data_clk
+@22
+wavelet_transform.i_value[7:0]
+wavelet_transform.srl_1.o_taps[127:0]
 [pattern_trace] 1
 [pattern_trace] 0
