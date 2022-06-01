@@ -23,8 +23,6 @@ module wavelet_transform #(
 
   wire start_calc;
 
-  parameter COUNTER_WIDTH = 4;
-
   `ifdef COCOTB_SIM
     initial begin
       $dumpfile ("wavelet_transform.vcd");
