@@ -23,22 +23,26 @@ module shift_register_line #(
 
   reg stb;
   reg start_calc;
-  reg data_clk_previous;
+  reg data_clk_previous; // data_clk one cycle before
+  reg data_clk_two_previous; // data_clk two cycles before
 
   initial begin
     o_taps = 0;
     stb = 0;
     start_calc = 0;
-  data_clk_previous = 0;
+    data_clk_previous = 0;
+    data_clk_two_previous = 0;
   end
 
   always @(posedge clk) begin
     o_taps <= o_taps;
     start_calc <= 0;
-    if (i_data_clk & ~data_clk_previous) begin //rising edge of i_data_clk
+    if (i_data_clk & ~data_clk_previous & ~data_clk_two_previous) begin //rising clk with one redundant reg to fix metastability
         o_taps <= {o_taps[((TOTAL_BITS-1)-BITS_PER_TAP):0], i_value};
         start_calc <= 1;
     end
+    data_clk_previous <= i_data_clk;
+    data_clk_two_previous <= data_clk_previous;
 
   end
 
