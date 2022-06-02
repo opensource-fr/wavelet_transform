@@ -25,6 +25,10 @@ async def test(dut):
 
     dut.i_data_clk.value = 0
     counter = 0
+    dut.i_select_output_channel = 0
+    channel_select = 0
+    channel_select_counter = 200
+
 
     # process audio through dut
     for i in range(nframes):
@@ -32,6 +36,13 @@ async def test(dut):
         frame = audio_in.readframes(1)
         # print(frame)
         (val,) = struct.unpack("h", frame)
+
+        if channel_select_counter == 0:
+            channel_select += 1
+            dut.i_select_output_channel = channel_select % 8
+            channel_select_counter = 200
+        else:
+            channel_select_counter -= 1
 
         dut.i_value.value = int(math.sin(0.1*counter*(1 + 0.01*counter))  * 127)
         counter = 1 +counter

@@ -10,14 +10,14 @@ module wavelet_transform #(
     // Clock
     input wire clk,
 
+    // Reset
+    input wire rst,
+
     // Input Wire
     input wire signed [BITS_PER_ELEM - 1:0] i_value,
 
     // data_input clock (rising edge)
     input wire i_data_clk,
-
-    // TODO: implement reset
-    input wire rst,
 
     // multiplexing for output channels
     input wire [7:0] i_select_output_channel,
@@ -25,26 +25,38 @@ module wavelet_transform #(
     // 8 bit output, channel selected by multiplexer
     output wire [SUM_TRUNCATION - 1:0] o_multiplexed_wavelet_out,
 
-    // set these as outputs
+    // set the multiplexed wavelet out pins as outputs
     output [7:0] io_oeb
 
 );
-// From python ricker wavelet generator
+// From Python Ricker-Wavelet Generator:
+// taps approx_bits_needed filter_values
 // 3 15 c77fc7
-// 5 15 e4dd7fdde4
-// 8 15 fde9c71212c7e9fd
+// 5 15 e4dd7fdde4 // NOTE: using 5 instead of 6 for waveform capture
+// 8 15 fde9c71212c7e9fd // NOTE: 8 replaced w/9 taps (better waveform capture)
+// 9 16 73'hFEEAC8127F12C8EAFE
 // 15 17 fef7e7cfc9f9507f50f9c9cfe7f7fe
 // 26 17 00fefcf8f0e4d5c9c9dd073e6c6c3e07ddc9c9d5e4f0f8fcfe00
 // 46 18 000000fefdfbf8f3ede6ded5cdc8c7cddaef0b2b4b667878664b2b0befdacdc7c8cdd5dee6edf3f8fbfdfe000000
 // 80 19 0000000000fefefdfcfbf9f7f5f2efebe7e2ddd8d3cecac8c7c8cbd1dae5f30315283b4d5d6b767c7c766b5d4d3b281503f3e5dad1cbc8c7c8caced3d8dde2e7ebeff2f5f7f9fbfcfdfefe0000000000
 // 140 20 000000000000000000fefefefdfdfcfcfbfaf9f8f7f6f4f3f1efedeae8e5e2dfdddad7d4d1cecccac8c7c7c7c8c9cccfd3d9dfe6edf60009141e29343f4a535d656d73787c7e7e7c78736d655d534a3f34291e140900f6ede6dfd9d3cfccc9c8c7c7c7c8caccced1d4d7dadddfe2e5e8eaedeff1f3f4f6f7f8f9fafbfcfcfdfdfefefe000000000000000000
+ /* 3 15 c77fc7 */
+/* 6 14 fbd5efefd5fb */
+/* 9 16 f9dfc81f7f1fc8dff9 */
+/* 16 16 00fcf3e1cbcd01555501cdcbe1f3fc00 */
+/* 27 17 00fefbf6ede0d2c8cbe10c416d7f6d410ce1cbc8d2e0edf6fbfe00 */
+/* 47 18 0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000 */
+/* 81 19 00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000 */
+/* 141 20 0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000 */
+
 
 
   // output bits
   wire [(TOTAL_FILTERS*SUM_TRUNCATION - 1):0] truncated_wavelet_out;
 
-  // low of outputs
-  assign io_oeb = 8'b0;
+  // set the multiplexed wavelet out pins as outputs
+  assign io_oeb = 8'h00;
+
   wire start_calc;
 
   `ifdef COCOTB_SIM
@@ -122,13 +134,14 @@ module wavelet_transform #(
       .i_start_calc(start_calc)
     );
 
+    /* f9dfc81f7f1fc8dff9 */
     // NOTE: using 9 instead of 8 elem, as the 9-taps capture the waveform better than 8
-    /* .FILTER_VAL(64'hFDE9C71212C7E9FD), */
+    /* .FILTER_VAL(72'hFEEAC8127F12C8EAFE), */
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
       .NUM_ELEM(9),
-      .FILTER_VAL(73'hFEEAC8127F12C8EAFE),
+      .FILTER_VAL(72'hF9DFC81F7F1FC8DFF9),
       .MAX_BITS(16)
     ) fir_2 (
       .clk(clk),
@@ -143,7 +156,7 @@ module wavelet_transform #(
       .SUM_TRUNCATION(SUM_TRUNCATION),
       .NUM_ELEM(15),
       .FILTER_VAL(120'hFEF7E7CFC9F9507F50F9C9CFE7F7FE),
-      .MAX_BITS(18)
+      .MAX_BITS(17)
     ) fir_3 (
       .clk(clk),
       .rst(rst),
@@ -185,7 +198,7 @@ module wavelet_transform #(
       .SUM_TRUNCATION(SUM_TRUNCATION),
       .NUM_ELEM(80),
       .FILTER_VAL(640'h0000000000FEFEFDFCFBF9F7F5F2EFEBE7E2DDD8D3CECAC8C7C8CBD1DAE5F30315283B4D5D6B767C7C766B5D4D3B281503F3E5DAD1CBC8C7C8CACED3D8DDE2E7EBEFF2F5F7F9FBFCFDFEFE0000000000),
-      .MAX_BITS(20)
+      .MAX_BITS(19)
     ) fir_6 (
       .clk(clk),
       .rst(rst),

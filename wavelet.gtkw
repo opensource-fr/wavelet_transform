@@ -1,22 +1,34 @@
 [*]
 [*] GTKWave Analyzer v3.3.111 (w)1999-2020 BSI
-[*] Thu Jun  2 01:51:55 2022
+[*] Thu Jun  2 10:11:45 2022
 [*]
 [dumpfile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet_transform.vcd"
-[dumpfile_mtime] "Thu Jun  2 01:44:44 2022"
-[dumpfile_size] 799157586
+[dumpfile_mtime] "Thu Jun  2 10:02:36 2022"
+[dumpfile_size] 799415388
 [savefile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet.gtkw"
-[timestart] 33800000
-[size] 1848 1022
-[pos] -51 -51
-*-24.900000 123610000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 45500000
+[size] 924 1022
+[pos] 873 -51
+*-26.700001 129220000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] wavelet_transform.
 [sst_width] 297
-[signals_width] 389
+[signals_width] 412
 [sst_expanded] 1
 [sst_vpaned_height] 304
-@8420
+@c08420
 wavelet_transform.fir_0.o_wavelet[7:0]
+@28
+(0)wavelet_transform.fir_0.o_wavelet[7:0]
+(1)wavelet_transform.fir_0.o_wavelet[7:0]
+(2)wavelet_transform.fir_0.o_wavelet[7:0]
+(3)wavelet_transform.fir_0.o_wavelet[7:0]
+(4)wavelet_transform.fir_0.o_wavelet[7:0]
+(5)wavelet_transform.fir_0.o_wavelet[7:0]
+(6)wavelet_transform.fir_0.o_wavelet[7:0]
+(7)wavelet_transform.fir_0.o_wavelet[7:0]
+@1409600
+-group_end
+@8420
 wavelet_transform.fir_1.o_wavelet[7:0]
 wavelet_transform.fir_2.o_wavelet[7:0]
 wavelet_transform.fir_3.o_wavelet[7:0]
@@ -24,16 +36,12 @@ wavelet_transform.fir_4.o_wavelet[7:0]
 wavelet_transform.fir_5.o_wavelet[7:0]
 wavelet_transform.fir_6.o_wavelet[7:0]
 wavelet_transform.fir_7.o_wavelet[7:0]
-wavelet_transform.i_value[7:0]
-wavelet_transform.o_multiplexed_wavelet_out[7:0]
+wavelet_transform.srl_1.i_value[7:0]
+@200
+-
 @22
-wavelet_transform.fir_0.taps[23:0]
-wavelet_transform.fir_1.taps[39:0]
-wavelet_transform.fir_1.i[4:0]
-wavelet_transform.fir_1.filter[39:0]
-@23
-wavelet_transform.fir_1.working_sum[15:0]
-@22
-wavelet_transform.i_select_output_channel[7:0]
+wavelet_transform.om_1.i_select_output_channel[7:0]
+@8420
+wavelet_transform.om_1.o_multiplexed_wavelet_out[7:0]
 [pattern_trace] 1
 [pattern_trace] 0
