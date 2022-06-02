@@ -8,6 +8,9 @@ module shift_register_line #(
     // Clock
     input wire clk,
 
+    // Reset
+    input wire rst,
+
     // Inputs Streaming
     input wire signed [BITS_PER_TAP - 1:0] i_value,
 
@@ -35,15 +38,23 @@ module shift_register_line #(
   end
 
   always @(posedge clk) begin
-    o_taps <= o_taps;
-    start_calc <= 0;
-    if (i_data_clk & ~data_clk_previous & ~data_clk_two_previous) begin //rising clk with one redundant reg to fix metastability
+    if (rst == 0) begin
+      o_taps <= 0;
+      stb <= 0;
+      start_calc <= 0;
+      data_clk_previous <= 0;
+      data_clk_two_previous <= 0;
+    end else begin
+      o_taps <= o_taps;
+      start_calc <= 0;
+      if (i_data_clk & ~data_clk_previous & ~data_clk_two_previous) begin //rising clk with one redundant reg to fix metastability
         o_taps <= {o_taps[((TOTAL_BITS-1)-BITS_PER_TAP):0], i_value};
         start_calc <= 1;
-    end
-    data_clk_previous <= i_data_clk;
-    data_clk_two_previous <= data_clk_previous;
+      end
+      data_clk_previous <= i_data_clk;
+      data_clk_two_previous <= data_clk_previous;
 
+    end
   end
 
   assign o_start_calc = start_calc;
