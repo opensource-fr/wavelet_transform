@@ -25,7 +25,7 @@ async def test(dut):
 
     dut.i_data_clk.value = 0
     counter = 0
-    dut.i_select_output_channel = 0
+    dut.i_select_output_channel = 0 % 8
     channel_select = 0
     channel_select_counter = 200
 
@@ -45,7 +45,7 @@ async def test(dut):
             channel_select_counter -= 1
 
         dut.i_value.value = int(math.sin(0.1*counter*(1 + 0.01*counter))  * 127)
-        counter = 1 +counter
+        counter = 1 + counter
         # print(dut.i_value.value)
         # if val > 0:
         #     dut.i_value.value = min(int((val / 32768.0 * 127)), 127)
