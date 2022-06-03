@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.111 (w)1999-2020 BSI
-[*] Thu Jun  2 10:11:45 2022
+[*] Thu Jun  2 21:40:13 2022
 [*]
 [dumpfile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet_transform.vcd"
-[dumpfile_mtime] "Thu Jun  2 10:02:36 2022"
-[dumpfile_size] 799415388
+[dumpfile_mtime] "Thu Jun  2 21:38:08 2022"
+[dumpfile_size] 799195551
 [savefile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet.gtkw"
-[timestart] 45500000
-[size] 924 1022
-[pos] 873 -51
-*-26.700001 129220000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 0
+[size] 1848 1022
+[pos] 72 0
+*-27.300001 129220000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] wavelet_transform.
 [sst_width] 297
 [signals_width] 412
@@ -26,7 +26,7 @@ wavelet_transform.fir_0.o_wavelet[7:0]
 (5)wavelet_transform.fir_0.o_wavelet[7:0]
 (6)wavelet_transform.fir_0.o_wavelet[7:0]
 (7)wavelet_transform.fir_0.o_wavelet[7:0]
-@1409600
+@1401200
 -group_end
 @8420
 wavelet_transform.fir_1.o_wavelet[7:0]
@@ -43,5 +43,7 @@ wavelet_transform.srl_1.i_value[7:0]
 wavelet_transform.om_1.i_select_output_channel[7:0]
 @8420
 wavelet_transform.om_1.o_multiplexed_wavelet_out[7:0]
+@28
+wavelet_transform.o_active
 [pattern_trace] 1
 [pattern_trace] 0
