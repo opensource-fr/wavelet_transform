@@ -30,12 +30,9 @@ module output_multiplexer #(
   end
 
   always @(posedge clk) begin
-    // TODO: is reset active low?
     if (rst) begin
-      // TODO:convert this to parametric (currently hardcoded to 8 for the shuttle)
       multiplexer_out <= 8'b0;
     end else begin
-      // TODO:convert this to parametric (currently hardcoded to 8 for the shuttle)
         case (i_select_output_channel)
           0: multiplexer_out <= i_truncated_wavelet_out[0*(SUM_TRUNCATION) +:SUM_TRUNCATION];
           1: multiplexer_out <= i_truncated_wavelet_out[1*(SUM_TRUNCATION) +:SUM_TRUNCATION];

@@ -1,8 +1,6 @@
 `default_nettype none
 `define M_T 6.2831853071
 
-// TODO: Hardcode for 8 bit input
-// TODO: calculate max bits from actual fir values instead of max, this may not be possible without using sv, or python and hardcoding it. */
 module fir #(
     parameter BITS_PER_ELEM = 8,
     parameter SUM_TRUNCATION = 8,
@@ -23,8 +21,6 @@ module fir #(
     input wire [NUM_ELEM * BITS_PER_ELEM - 1:0] taps,
 
     // Outputs
-    //TODO: refactor output from int32 to only allocate number of bits that will be used
-    /* output wire [$clog2({BITS_PER_ELEM{1'b1}}*NUM_ELEM):0] output_sum */
     output wire signed [SUM_TRUNCATION - 1:0] o_wavelet
 
 );
@@ -73,4 +69,5 @@ module fir #(
     end
   end
 
+  // TODO: create a formal verification section to ensure no overflow
 endmodule
