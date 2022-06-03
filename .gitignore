@@ -2,3 +2,10 @@ obj_dir/
 top/
 top_cvr/
 top_prf/
+
+results.xml
+
+*.vcd
+test/*.wav
+
+test/__pycache__/
