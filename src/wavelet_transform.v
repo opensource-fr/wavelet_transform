@@ -7,6 +7,11 @@ module wavelet_transform #(
     parameter TOTAL_FILTERS = 8,
     parameter SUM_TRUNCATION = 8
 ) (
+`ifdef USE_POWER_PINS
+	inout vccd1,	// User area 1 1.8V power
+	inout vssd1,	// User area 1 digital ground
+`endif
+
     // Clock
     input wire clk,
 
