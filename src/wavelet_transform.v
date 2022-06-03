@@ -59,6 +59,34 @@ module wavelet_transform #(
   /* 81 19 00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000 */
   /* 141 20 0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000 */
 
+  /* 3 24 16 c77fc7 */
+  /* 6 48 15 fbd5efefd5fb */
+  /* 9 72 17 f9dfc81f7f1fc8dff9 */
+  /* 16 128 17 00fcf3e1cbcd01555501cdcbe1f3fc00 */
+  /* 27 216 18 00fefbf6ede0d2c8cbe10c416d7f6d410ce1cbc8d2e0edf6fbfe00 */
+  /* 47 376 19 0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000 */
+  /* 81 648 20 00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000 */
+  /* 141 1128 21 0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000 */
+
+  /* 3 24 16 c77fc7 */
+  /* 5 40 16 e4dd7fdde4 */
+  /* 9 72 17 f9dfc81f7f1fc8dff9 */
+  /* 16 128 17 00fcf3e1cbcd01555501cdcbe1f3fc00 */
+  /* 27 216 18 00fefbf6ede0d2c8cbe10c416d7f6d410ce1cbc8d2e0edf6fbfe00 */
+  /* 47 376 19 0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000 */
+  /* 81 648 20 00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000 */
+  /* 141 1128 21 0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000 */
+
+  /* 3 24 16 c77fc7 */
+  /* 5 40 16 e4dd7fdde4 */
+  /* 9 72 17 f9dfc81f7f1fc8dff9 */
+  /* 15 120 18 fef7e7cfc9f9507f50f9c9cfe7f7fe */
+  /* 27 216 18 00fefbf6ede0d2c8cbe10c416d7f6d410ce1cbc8d2e0edf6fbfe00 */
+  /* 47 376 19 0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000 */
+  /* 81 648 20 00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000 */
+  /* 141 1128 21 0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000 */
+
+
   // output bits
   wire [(TOTAL_FILTERS*SUM_TRUNCATION - 1):0] truncated_wavelet_out;
 
@@ -154,15 +182,12 @@ module wavelet_transform #(
       .i_start_calc(start_calc)
     );
 
-    /* f9dfc81f7f1fc8dff9 */
-    // NOTE: using 9 instead of 8 elem, as the 9-taps capture the waveform better than 8
-    /* .FILTER_VAL(72'hFEEAC8127F12C8EAFE), */
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
       .NUM_ELEM(9),
       .FILTER_VAL(72'hF9DFC81F7F1FC8DFF9),
-      .MAX_BITS(16)
+      .MAX_BITS(17)
     ) fir_2 (
       .clk(clk),
       .rst(rst),
@@ -176,7 +201,7 @@ module wavelet_transform #(
       .SUM_TRUNCATION(SUM_TRUNCATION),
       .NUM_ELEM(15),
       .FILTER_VAL(120'hFEF7E7CFC9F9507F50F9C9CFE7F7FE),
-      .MAX_BITS(17)
+      .MAX_BITS(18)
     ) fir_3 (
       .clk(clk),
       .rst(rst),
@@ -188,13 +213,13 @@ module wavelet_transform #(
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(26),
-      .FILTER_VAL(208'h00FEFCF8F0E4D5C9C9DD073E6C6C3E07DDC9C9D5E4F0F8FCFE00),
+      .NUM_ELEM(27),
+      .FILTER_VAL(216'h00FEFBF6EDE0D2C8CBE10C416D7F6D410CE1CBC8D2E0EDF6FBFE00),
       .MAX_BITS(18)
     ) fir_4 (
       .clk(clk),
       .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*26) - 1:0]),
+      .taps (taps[(BITS_PER_ELEM*27) - 1:0]),
       .o_wavelet(truncated_wavelet_out[39:32]),
       .i_start_calc(start_calc)
     );
@@ -202,13 +227,13 @@ module wavelet_transform #(
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(46),
-      .FILTER_VAL(368'h000000FEFDFBF8F3EDE6DED5CDC8C7CDDAEF0B2B4B667878664B2B0BEFDACDC7C8CDD5DEE6EDF3F8FBFDFE000000),
+      .NUM_ELEM(47),
+      .FILTER_VAL(376'h0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000),
       .MAX_BITS(19)
     ) fir_5 (
       .clk(clk),
       .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*46) - 1:0]),
+      .taps (taps[(BITS_PER_ELEM*47) - 1:0]),
       .o_wavelet(truncated_wavelet_out[47:40]),
       .i_start_calc(start_calc)
     );
@@ -216,13 +241,13 @@ module wavelet_transform #(
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(80),
-      .FILTER_VAL(640'h0000000000FEFEFDFCFBF9F7F5F2EFEBE7E2DDD8D3CECAC8C7C8CBD1DAE5F30315283B4D5D6B767C7C766B5D4D3B281503F3E5DAD1CBC8C7C8CACED3D8DDE2E7EBEFF2F5F7F9FBFCFDFEFE0000000000),
-      .MAX_BITS(19)
+      .NUM_ELEM(81),
+      .FILTER_VAL(648'h00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000),
+      .MAX_BITS(20)
     ) fir_6 (
       .clk(clk),
       .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*80) - 1:0]),
+      .taps (taps[(BITS_PER_ELEM*81) - 1:0]),
       .o_wavelet(truncated_wavelet_out[55:48]),
       .i_start_calc(start_calc)
     );
@@ -230,13 +255,13 @@ module wavelet_transform #(
     fir #(
       .BITS_PER_ELEM(BITS_PER_ELEM),
       .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(140),
-      .FILTER_VAL(1120'h000000000000000000FEFEFEFDFDFCFCFBFAF9F8F7F6F4F3F1EFEDEAE8E5E2DFDDDAD7D4D1CECCCAC8C7C7C7C8C9CCCFD3D9DFE6EDF60009141E29343F4A535D656D73787C7E7E7C78736D655D534A3F34291E140900F6EDE6DFD9D3CFCCC9C8C7C7C7C8CACCCED1D4D7DADDDFE2E5E8EAEDEFF1F3F4F6F7F8F9FAFBFCFCFDFDFEFEFE000000000000000000),
-      .MAX_BITS(20)
+      .NUM_ELEM(141),
+      .FILTER_VAL(1128'h0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000),
+      .MAX_BITS(21)
     ) fir_7 (
       .clk(clk),
       .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*140) - 1:0]),
+      .taps (taps[(BITS_PER_ELEM*141) - 1:0]),
       .o_wavelet(truncated_wavelet_out[63:56]),
       .i_start_calc(start_calc)
     );
