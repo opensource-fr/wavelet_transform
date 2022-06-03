@@ -31,7 +31,7 @@ module output_multiplexer #(
 
   always @(posedge clk) begin
     // TODO: is reset active low?
-    if (rst == 0) begin
+    if (rst) begin
       // TODO:convert this to parametric (currently hardcoded to 8 for the shuttle)
       multiplexer_out <= 8'b0;
     end else begin

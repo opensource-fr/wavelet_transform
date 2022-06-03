@@ -89,7 +89,7 @@ module wavelet_transform #(
 
   // NOTE: signal that this module is active after pulling out of reset
   always @(posedge clk) begin
-    if (rst == 0) begin
+    if (rst) begin
       active <= 1'b0;
     end else begin
       active <= 1'b1;

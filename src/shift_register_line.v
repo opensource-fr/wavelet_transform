@@ -38,7 +38,7 @@ module shift_register_line #(
   end
 
   always @(posedge clk) begin
-    if (rst == 0) begin
+    if (rst) begin
       o_taps <= 0;
       stb <= 0;
       start_calc <= 0;

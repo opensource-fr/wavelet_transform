@@ -54,7 +54,7 @@ module fir #(
   // called "sum", and will maintian its value, only being updated if
   // i_start_calc is raised)
   always @(posedge clk) begin
-    if (rst == 0) begin
+    if (rst) begin
       // NOTE: parametric setting appears to require sv, so hardcoding with FILTER_VAL
       filter <= FILTER_VAL;
       sum <= 0;
