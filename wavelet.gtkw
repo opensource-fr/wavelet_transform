@@ -1,46 +1,49 @@
 [*]
 [*] GTKWave Analyzer v3.3.111 (w)1999-2020 BSI
-[*] Wed Jun  1 00:08:31 2022
+[*] Thu Jun  2 21:40:13 2022
 [*]
-[dumpfile] "/home/zerotoasic/OpensourceWaveletTransform/wavelet_transform.vcd"
-[dumpfile_mtime] "Wed Jun  1 00:03:01 2022"
-[dumpfile_size] 35954736
-[savefile] "/home/zerotoasic/OpensourceWaveletTransform/wavelet.gtkw"
-[timestart] 1222100
+[dumpfile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet_transform.vcd"
+[dumpfile_mtime] "Thu Jun  2 21:38:08 2022"
+[dumpfile_size] 799195551
+[savefile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/wavelet.gtkw"
+[timestart] 0
 [size] 1848 1022
-[pos] 51 45
-*-16.199999 184460000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 72 0
+*-27.300001 129220000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] wavelet_transform.
-[treeopen] wavelet_transform.genblk1[0].
-[treeopen] wavelet_transform.genblk1[0].genblk1.
-[treeopen] wavelet_transform.genblk1[1].
-[treeopen] wavelet_transform.genblk1[1].genblk1.
-[treeopen] wavelet_transform.genblk1[2].
-[treeopen] wavelet_transform.genblk1[2].genblk1.
-[treeopen] wavelet_transform.genblk1[3].
-[treeopen] wavelet_transform.genblk1[3].genblk1.
 [sst_width] 297
-[signals_width] 222
-[sst_expanded] 0
-[sst_vpaned_height] 271
-@20000
--
+[signals_width] 412
+[sst_expanded] 1
+[sst_vpaned_height] 304
+@c08420
+wavelet_transform.fir_0.o_wavelet[7:0]
+@28
+(0)wavelet_transform.fir_0.o_wavelet[7:0]
+(1)wavelet_transform.fir_0.o_wavelet[7:0]
+(2)wavelet_transform.fir_0.o_wavelet[7:0]
+(3)wavelet_transform.fir_0.o_wavelet[7:0]
+(4)wavelet_transform.fir_0.o_wavelet[7:0]
+(5)wavelet_transform.fir_0.o_wavelet[7:0]
+(6)wavelet_transform.fir_0.o_wavelet[7:0]
+(7)wavelet_transform.fir_0.o_wavelet[7:0]
+@1401200
+-group_end
 @8420
-wavelet_transform.i_value[7:0]
-wavelet_transform.genblk1[0].genblk1.fir_1.o_wavelet[7:0]
-wavelet_transform.genblk1[1].genblk1.fir_1.o_wavelet[7:0]
-wavelet_transform.genblk1[2].genblk1.fir_1.o_wavelet[7:0]
-@8421
-wavelet_transform.genblk1[3].genblk1.fir_1.o_wavelet[7:0]
+wavelet_transform.fir_1.o_wavelet[7:0]
+wavelet_transform.fir_2.o_wavelet[7:0]
+wavelet_transform.fir_3.o_wavelet[7:0]
+wavelet_transform.fir_4.o_wavelet[7:0]
+wavelet_transform.fir_5.o_wavelet[7:0]
+wavelet_transform.fir_6.o_wavelet[7:0]
+wavelet_transform.fir_7.o_wavelet[7:0]
+wavelet_transform.srl_1.i_value[7:0]
 @200
 -
-@28
-wavelet_transform.srl_1.data_clk_two_previous
-wavelet_transform.srl_1.data_clk_previous
-[color] 1
-wavelet_transform.srl_1.i_data_clk
 @22
-wavelet_transform.i_value[7:0]
-wavelet_transform.srl_1.o_taps[127:0]
+wavelet_transform.om_1.i_select_output_channel[7:0]
+@8420
+wavelet_transform.om_1.o_multiplexed_wavelet_out[7:0]
+@28
+wavelet_transform.o_active
 [pattern_trace] 1
 [pattern_trace] 0
