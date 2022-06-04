@@ -74,7 +74,7 @@ module wavelet_transform #(
   // really we should calculate the ratio of the elements to produce the freq
   // NUM_ELEM * ELEM_RATIO
   /* parameter TOTAL_TAPS = (1 + $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, NUM_FILTERS - 1))); */
-  parameter TOTAL_TAPS = 1120; // for 8 filters starting at 3 elements
+  parameter TOTAL_TAPS = 1128; // for 8 filters starting at 3 elements
   parameter BITS_PER_TAP = BITS_PER_ELEM;
 
   parameter TOTAL_BITS = BITS_PER_TAP * TOTAL_TAPS;
