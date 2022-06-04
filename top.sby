@@ -14,9 +14,12 @@ prf: depth 20
 smtbmc
 
 [script]
-read -formal top.v
-prep -top top
+read -formal wavelet_transform.v fir.v shift_register_line.v output_multiplexer.v
+prep -top wavelet_transform
 
 [files]
-./src/top.v
+./src/wavelet_transform.v
+./src/shift_register_line.v
+./src/fir.v
+./src/output_multiplexer.v
 

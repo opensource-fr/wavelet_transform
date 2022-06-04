@@ -69,5 +69,39 @@ module fir #(
     end
   end
 
-  // TODO: create a formal verification section to ensure no overflow
+  `ifdef FORMAL
+    reg f_past_valid = 0;
+    reg signed [31:0] overflow_test_sum = 0;
+    reg signed [MAX_BITS - 1:0] truncated_overflow_test_sum = 0;
+
+    initial assume(rst);
+
+    always @(posedge clk) begin
+      f_past_valid <= 1;
+      if(f_past_valid) begin
+        if (rst) begin
+          overflow_test_sum <= 0;
+          truncated_overflow_test_sum <= 0;
+        end else begin
+          if (i_start_calc) begin
+            overflow_test_sum = 0;
+            for (i = 0; i < NUM_ELEM; i = i + 1) begin
+              overflow_test_sum = overflow_test_sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
+            end
+            truncated_overflow_test_sum <= overflow_test_sum[MAX_BITS - 1: 0];
+          end
+        end
+        // test if the MAX_BITS value from the top module can result in overflow
+        if(f_past_valid) begin
+          if ($signed(overflow_test_sum) > 0) begin
+            _overflow_test_pos: assert($signed(overflow_test_sum) <= {{(32 - MAX_BITS + 1){1'b0}},{(MAX_BITS - 1){1'b1}}});
+          end
+          if ($signed(overflow_test_sum) < 0) begin
+            _overflow_test_neg: assert($signed(overflow_test_sum) >= {{(32 - MAX_BITS + 1){1'b1}},{(MAX_BITS - 1){1'b0}}});
+          end
+        end
+      end
+    end
+
+  `endif
 endmodule

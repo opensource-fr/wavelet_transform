@@ -1,0 +1,34 @@
+[*]
+[*] GTKWave Analyzer v3.3.111 (w)1999-2020 BSI
+[*] Sat Jun  4 17:05:17 2022
+[*]
+[dumpfile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/top_prf/engine_0/trace.vcd"
+[dumpfile_mtime] "Sat Jun  4 17:03:18 2022"
+[dumpfile_size] 175817
+[savefile] "/home/zerotoasic/asic_tools/caravel_user_project/verilog/rtl/wavelet_transform/formal_overflow_test.gtkw"
+[timestart] 0
+[size] 1848 1022
+[pos] 77 68
+*-3.774996 40 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] wavelet_transform.
+[sst_width] 297
+[signals_width] 294
+[sst_expanded] 1
+[sst_vpaned_height] 242
+@28
+wavelet_transform.fir_0.rst
+wavelet_transform.fir_0.f_past_valid
+@22
+wavelet_transform.i_value[7:0]
+@421
+[color] 2
+wavelet_transform.fir_0.overflow_test_sum[31:0]
+[color] 2
+wavelet_transform.fir_0.sum[13:0]
+@420
+wavelet_transform.fir_1.overflow_test_sum[31:0]
+wavelet_transform.fir_1.sum[15:0]
+wavelet_transform.fir_2.overflow_test_sum[31:0]
+wavelet_transform.fir_2.sum[16:0]
+[pattern_trace] 1
+[pattern_trace] 0
