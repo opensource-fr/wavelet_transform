@@ -4,7 +4,7 @@
 
 module wavelet_transform #(
     parameter BITS_PER_ELEM = 8,
-    parameter TOTAL_FILTERS = 8,
+    parameter TOTAL_FILTERS = 7,
     parameter SUM_TRUNCATION = 8
 ) (
 `ifdef USE_POWER_PINS
@@ -74,7 +74,7 @@ module wavelet_transform #(
   // really we should calculate the ratio of the elements to produce the freq
   // NUM_ELEM * ELEM_RATIO
   /* parameter TOTAL_TAPS = (1 + $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, NUM_FILTERS - 1))); */
-  parameter TOTAL_TAPS = 1128; // for 8 filters starting at 3 elements
+  parameter TOTAL_TAPS = 658; // for 7 filters starting at 3 elements
   parameter BITS_PER_TAP = BITS_PER_ELEM;
 
   parameter TOTAL_BITS = BITS_PER_TAP * TOTAL_TAPS;
@@ -215,19 +215,4 @@ module wavelet_transform #(
       .i_start_calc(start_calc)
     );
 
-    fir #(
-      .BITS_PER_ELEM(BITS_PER_ELEM),
-      .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(141),
-      .FILTER_VAL(1128'h0000000000000000fefefefefdfdfcfcfbfaf9f8f7f5f4f2f0eeeceae7e4e2dfdcd9d6d3d0cecccac8c7c7c7c8caccd0d4d9e0e7eef7000a151f2a35404a545d666d73787c7e7f7e7c78736d665d544a40352a1f150a00f7eee7e0d9d4d0cccac8c7c7c7c8caccced0d3d6d9dcdfe2e4e7eaeceef0f2f4f5f7f8f9fafbfcfcfdfdfefefefe0000000000000000),
-      .MAX_BITS(21)
-    ) fir_7 (
-      .clk(clk),
-      .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*141) - 1:0]),
-      .o_wavelet(truncated_wavelet_out[63:56]),
-      .i_start_calc(start_calc)
-    );
-
-    // TODO: add formal section
 endmodule

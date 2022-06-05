@@ -41,7 +41,6 @@ module output_multiplexer #(
           4: multiplexer_out <= i_truncated_wavelet_out[4*(SUM_TRUNCATION) +:SUM_TRUNCATION];
           5: multiplexer_out <= i_truncated_wavelet_out[5*(SUM_TRUNCATION) +:SUM_TRUNCATION];
           6: multiplexer_out <= i_truncated_wavelet_out[6*(SUM_TRUNCATION) +:SUM_TRUNCATION];
-          7: multiplexer_out <= i_truncated_wavelet_out[7*(SUM_TRUNCATION) +:SUM_TRUNCATION];
           default: multiplexer_out <= i_truncated_wavelet_out[0+:SUM_TRUNCATION];
         endcase
     end
