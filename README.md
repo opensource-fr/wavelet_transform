@@ -1,7 +1,5 @@
 # Wavelet Transform
 
-[toc]
-
 # Description
 
 The wavelet transform can be seen as an alternative to the FFT.
@@ -10,8 +8,6 @@ Essentially it's a convolution of a small wave or 'wavelet'.
 
 A wavelet is created from which is integral of close together cosine waves, and
 ends up looking like mini-version of the center freq.
-
-+ TODO: add image
 
 Typically, the shape of the wavelet is the same for each of ranges of interest,
 just scaled.
