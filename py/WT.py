@@ -32,7 +32,7 @@ class CWT_FIR:
         self._base_num_elem = base_num_elem
         self._base_freq = base_freq
         self._wavelet_order = wavelet_order
-        self._num_elem = int(self._base_num_elem / (elem_ratio**self._wavelet_order))
+        self._num_elem = math.ceil(self._base_num_elem / (elem_ratio**self._wavelet_order))
         print(self._base_num_elem, self._num_elem)
 
         self._center_freq = self._base_freq / (elem_ratio**self._wavelet_order)
@@ -89,6 +89,24 @@ class CWT_FIR:
     def print_tap_values(self):
         """Prints tap values to console"""
         print(self._filter)
+
+    def print_tap_values_hex(self):
+        """Prints length in bytes, max bits, and tap values to console"""
+        filter_val = ""
+        max_bits = 0
+        for x in range(len(self._filter)):
+            padding = 2
+            value = self._filter[x]
+            if value < 0:
+                filter_val += f"{(255 + value):0{padding}x}"
+                max_bits += value * -128
+            else:
+                filter_val += f"{value:0{padding}x}"
+                max_bits += value * 127
+
+        max_bits = math.ceil(math.log(max_bits)/math.log(2))
+
+        print(len(self._filter), max_bits, filter_val)
 
     def shift_in_value(self, input_value):
         """Shift in the value into the filter bank queue"""
@@ -154,6 +172,10 @@ class Wavelet_Array:
         for filter in self._filter_list:
             filter.print_tap_values()
 
+    def print_all_filters_hex(self):
+        for filter in self._filter_list:
+            filter.print_tap_values_hex()
+
     def calculate_outputs(self):
         for filter in self._filter_list:
             self._indiv_filter_sums.append(filter.compute_output())
@@ -168,19 +190,33 @@ class Wavelet_Array:
         return total
 
 
-# test code
+def test_with_constant_inputs(wa, input_value, num_inputs):
+    """Runs a simple test showing output values for constant input
 
-# cwt = CWT_FIR(base_num_elem=12)
+    Args:
+        wa (Wavelet_Array): Wavelet_Array object
+        input_value (int): constant to be fed into the queue
+        num_inputs (int): number of inputs to be shifted in before printing output
+    """
 
-# cwt.print_tap_values()
-wa = Wavelet_Array(base_num_elem=3)
-print("print all filters")
-wa.print_all_filters()
+    for t in range(0, num_inputs):
+        wa.shift_in_value(input_value)
 
-print("calc outputs")
-for t in range(0, 62):
-    wa.shift_in_value(127)
+    # crunch the numbers
+    wa.calculate_outputs()
 
-wa.calculate_outputs()
-wa.print_calculated_outputs_per_filter()
-print(wa.calculate_total_output())
+    # print out each wavelet's output
+    wa.print_calculated_outputs_per_filter()
+
+def main():
+
+    wa = Wavelet_Array(base_num_elem=3)
+
+    print("print values from each filter")
+    wa.print_all_filters() # decimal representation
+    wa.print_all_filters_hex() # hex representation
+
+    test_with_constant_inputs(wa, 127, 62)
+
+if __name__ == "__main__":
+    main()
