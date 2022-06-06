@@ -4,7 +4,7 @@
 
 module wavelet_transform #(
     parameter BITS_PER_ELEM = 8,
-    parameter TOTAL_FILTERS = 7,
+    parameter TOTAL_FILTERS = 3,
     parameter SUM_TRUNCATION = 8
 ) (
 `ifdef USE_POWER_PINS
@@ -73,8 +73,14 @@ module wavelet_transform #(
   // number of elements is ∝ HIGHEST_FREQ/THIS_FREQ
   // really we should calculate the ratio of the elements to produce the freq
   // NUM_ELEM * ELEM_RATIO
+
   /* parameter TOTAL_TAPS = (1 + $rtoi(BASE_NUM_ELEM * 1.0 / $pow(`ELEM_RATIO, NUM_FILTERS - 1))); */
-  parameter TOTAL_TAPS = 658; // for 7 filters starting at 3 elements
+  /* parameter TOTAL_TAPS = 24; // for 1 filters starting at 3 elements */
+  parameter TOTAL_TAPS = 72; // for 3 filters starting at 3 elements
+  /* parameter TOTAL_TAPS = 120; // for 4 filters starting at 3 elements */
+  /* parameter TOTAL_TAPS = 216; // for 5 filters starting at 3 elements */
+  /* parameter TOTAL_TAPS = 376; // for 6 filters starting at 3 elements */
+  /* parameter TOTAL_TAPS = 658; // for 7 filters starting at 3 elements */
   parameter BITS_PER_TAP = BITS_PER_ELEM;
 
   parameter TOTAL_BITS = BITS_PER_TAP * TOTAL_TAPS;
@@ -159,60 +165,61 @@ module wavelet_transform #(
       .i_start_calc(start_calc)
     );
 
-    fir #(
-      .BITS_PER_ELEM(BITS_PER_ELEM),
-      .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(15),
-      .FILTER_VAL(120'hFEF7E7CFC9F9507F50F9C9CFE7F7FE),
-      .MAX_BITS(18)
-    ) fir_3 (
-      .clk(clk),
-      .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*15) - 1:0]),
-      .o_wavelet(truncated_wavelet_out[31:24]),
-      .i_start_calc(start_calc)
-    );
+/*     fir #( */
+/*       .BITS_PER_ELEM(BITS_PER_ELEM), */
+/*       .SUM_TRUNCATION(SUM_TRUNCATION), */
+/*       .NUM_ELEM(15), */
+/*       .FILTER_VAL(120'hFEF7E7CFC9F9507F50F9C9CFE7F7FE), */
+/*       .MAX_BITS(18) */
+/*     ) fir_3 ( */
+/*       .clk(clk), */
+/*       .rst(rst), */
+/*       .taps (taps[(BITS_PER_ELEM*15) - 1:0]), */
+/*       .o_wavelet(truncated_wavelet_out[31:24]), */
+/*       .i_start_calc(start_calc) */
+/*     ); */
 
-    fir #(
-      .BITS_PER_ELEM(BITS_PER_ELEM),
-      .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(27),
-      .FILTER_VAL(216'h00FEFBF6EDE0D2C8CBE10C416D7F6D410CE1CBC8D2E0EDF6FBFE00),
-      .MAX_BITS(18)
-    ) fir_4 (
-      .clk(clk),
-      .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*27) - 1:0]),
-      .o_wavelet(truncated_wavelet_out[39:32]),
-      .i_start_calc(start_calc)
-    );
+/*     fir #( */
+/*       .BITS_PER_ELEM(BITS_PER_ELEM), */
+/*       .SUM_TRUNCATION(SUM_TRUNCATION), */
+/*       .NUM_ELEM(27), */
+/*       .FILTER_VAL(216'h00FEFBF6EDE0D2C8CBE10C416D7F6D410CE1CBC8D2E0EDF6FBFE00), */
+/*       .MAX_BITS(18) */
+/*     ) fir_4 ( */
+/*       .clk(clk), */
+/*       .rst(rst), */
+/*       .taps (taps[(BITS_PER_ELEM*27) - 1:0]), */
+/*       .o_wavelet(truncated_wavelet_out[39:32]), */
+/*       .i_start_calc(start_calc) */
+/*     ); */
 
-    fir #(
-      .BITS_PER_ELEM(BITS_PER_ELEM),
-      .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(47),
-      .FILTER_VAL(376'h0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000),
-      .MAX_BITS(19)
-    ) fir_5 (
-      .clk(clk),
-      .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*47) - 1:0]),
-      .o_wavelet(truncated_wavelet_out[47:40]),
-      .i_start_calc(start_calc)
-    );
 
-    fir #(
-      .BITS_PER_ELEM(BITS_PER_ELEM),
-      .SUM_TRUNCATION(SUM_TRUNCATION),
-      .NUM_ELEM(81),
-      .FILTER_VAL(648'h00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000),
-      .MAX_BITS(20)
-    ) fir_6 (
-      .clk(clk),
-      .rst(rst),
-      .taps (taps[(BITS_PER_ELEM*81) - 1:0]),
-      .o_wavelet(truncated_wavelet_out[55:48]),
-      .i_start_calc(start_calc)
-    );
+    /* fir #( */
+    /*   .BITS_PER_ELEM(BITS_PER_ELEM), */
+    /*   .SUM_TRUNCATION(SUM_TRUNCATION), */
+    /*   .NUM_ELEM(47), */
+    /*   .FILTER_VAL(376'h0000fefdfcfaf6f2ebe4dcd3ccc7c8cfddf30e2e4d67787f78674d2e0ef3ddcfc8c7ccd3dce4ebf2f6fafcfdfe0000), */
+    /*   .MAX_BITS(19) */
+    /* ) fir_5 ( */
+    /*   .clk(clk), */
+    /*   .rst(rst), */
+    /*   .taps (taps[(BITS_PER_ELEM*47) - 1:0]), */
+    /*   .o_wavelet(truncated_wavelet_out[47:40]), */
+    /*   .i_start_calc(start_calc) */
+    /* ); */
+
+    /* fir #( */
+    /*   .BITS_PER_ELEM(BITS_PER_ELEM), */
+    /*   .SUM_TRUNCATION(SUM_TRUNCATION), */
+    /*   .NUM_ELEM(81), */
+    /*   .FILTER_VAL(648'h00000000fefefdfdfcfaf9f7f4f1eeeae5e0dbd6d2cdcac7c7c8ccd2dbe7f505172a3c4e5e6c767c7f7c766c5e4e3c2a1705f5e7dbd2ccc8c7c7cacdd2d6dbe0e5eaeef1f4f7f9fafcfdfdfefe00000000), */
+    /*   .MAX_BITS(20) */
+    /* ) fir_6 ( */
+    /*   .clk(clk), */
+    /*   .rst(rst), */
+    /*   .taps (taps[(BITS_PER_ELEM*81) - 1:0]), */
+    /*   .o_wavelet(truncated_wavelet_out[55:48]), */
+    /*   .i_start_calc(start_calc) */
+    /* ); */
 
 endmodule
