@@ -56,8 +56,8 @@ module fir #(
       sum <= 0;
       working_sum <= 0;
     end else begin
+      working_sum = 0;
       if (i_start_calc) begin
-        working_sum = 0;
         for (i = 0; i < NUM_ELEM; i = i + 1) begin
           working_sum = working_sum + $signed(filter[BITS_PER_ELEM*i+:BITS_PER_ELEM]) * $signed(taps[BITS_PER_ELEM*i+:BITS_PER_ELEM]);
         end
