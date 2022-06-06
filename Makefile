@@ -78,14 +78,12 @@ resources:
 	# yosys -p "synth_ice40 -wavelet_transform $(PROJECT_NAME)" $(SOURCES) > $(STATS_DIR)/$$(date +%F_%T)
 
 
-# TODO: remove everything except for .gitignore
-test_cwt:
+test_wt:
 	rm -rf ./sim_build/*
 	iverilog -DCOCOTB_SIM -o sim_build/sim.vvp  -s wavelet_transform -g2012 src/wavelet_transform.v  src/fir.v src/shift_register_line.v src/output_multiplexer.v
-	PYTHONOPTIMIZE=${NOASSERT} MODULE=test.test_cwt vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
+	TESTCASE=test_modulated_sine MODULE=test_wt vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
 
 
-# TODO: remove everything except for .gitignore
 clean:
 	rm -f $(ARTIFACTS)/*.json
 	rm -f $(ARTIFACTS)/*.asc
